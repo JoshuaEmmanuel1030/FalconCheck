@@ -61,25 +61,49 @@ st.markdown("""
             color: white;
             text-decoration: none; /* Removes underline on hover */
         }
+        /* Footer styling */
+        .footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar (you can add more content here later)
-st.sidebar.title("Sidebar")
-st.sidebar.write("This is the sidebar content placeholder.")
+# Sidebar with navigation buttons
+st.sidebar.title("Quick Links")
+if st.sidebar.button("Bentley Health Portal"):
+    st.sidebar.markdown(
+        '<a href="https://bentley.medicatconnect.com/home.aspx" target="_blank">Go to Bentley Health Portal</a>',
+        unsafe_allow_html=True
+    )
+if st.sidebar.button("Make an Appointment with Health Center"):
+    st.sidebar.markdown(
+        '<a href= "https://bentley.medicatconnect.com/appointment.aspx" target="_blank">Schedule Health Center Appointment</a>',
+        unsafe_allow_html=True
+    )
+if st.sidebar.button("Visit Wellness Center"):
+    st.sidebar.markdown(
+        '<a href="https://www.bentley.edu/university-life/student-health/counseling-center" target="_blank">Go to Counseling Center</a>',
+        unsafe_allow_html=True
+    )
 
 # Center the image using st.image with custom CSS
 st.markdown('<div style="display: flex; justify-content: center; margin-top: 20px;">', unsafe_allow_html=True)
-st.image("logo2.png", width=200, caption="Medical Diagnosis Logo")
+st.image("logo3.png", width=200, caption="Medical Diagnosis Logo")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # App Title and Instructions
 st.markdown('<div class="main-container">', unsafe_allow_html=True)
-st.markdown('<div class="header">Medical Diagnosis Assistant</div>', unsafe_allow_html=True)
+st.markdown('<div class="header">FalconCheck</div>', unsafe_allow_html=True)
 st.write("Enter your symptoms or health concerns and press Enter for a preliminary diagnosis.")
 
 # Input for symptoms or health concerns
-symptoms_input = st.text_input("Please describe your symptoms or health concerns:")
+symptoms_input = st.text_input("Please describe your symptoms or concerns:")
+
 
 # Function to call OpenAI API for diagnosis
 def get_diagnosis(symptoms):
@@ -96,6 +120,11 @@ def get_diagnosis(symptoms):
                     "from the Falcon Market under Collins Hall. "
                     "You should also act as a makeshift therapist if the situation requires it. If it seems that the symptoms the user describes are related to mental health issues, suggest they visit "
                     "the wellness center near the Bentley Police Station."
+                    "Bentley University’s campus is organized into distinct zones with academic, administrative, residential, and recreational buildings, all connected by main roads and pathways. The Main Entrance on Forest Street is the primary entry point, leading visitors directly to several key buildings, including LaCava Center (1), an administrative hub, and Bentley Library (2). Close by, Morison Hall (4) and Lindsay Hall (5) are important academic buildings located near the entrance. Continuing into the campus, the core academic area includes Adamian Academic Center (6), Smith Academic Technology Center (7), and Jennison Hall (8), which are centrally located and close to one another, providing convenient access to educational resources. Adjacent to this academic cluster are Rauch Administration Center (9) and Falcone Complex (10), which provide additional administrative support."
+                    "The Student Center and Residential Center (19) is a hub for student life, located near Rhodes Hall (18), which serves as Health Services, and is accessible from both Forest Street and Falcon Way. Surrounding residential buildings, such as Orchard North Apartments (20), Orchard South Apartments (21), The Trees (10), and Boylston Apartments (13), are positioned to facilitate easy access to student services and social areas. Collins Hall (15), near Falcon Way, houses the Bentley Bookstore, making it a central location for student supplies. Miller Hall (16), Slade Hall (11), and Forest Hall (17) are also among the residential buildings distributed around the campus, providing convenient accommodations for students."
+                    "For dining and social interactions, The Castle (22) and The Cape (23) are notable gathering places near residential areas, fostering a community atmosphere. The campus wellness and safety facilities include University Police and Counseling Center (12), ensuring student safety, and the Wellness Center near the Bentley Police Station. At the eastern end of the campus, the Dana Athletic Center (29) and nearby athletic fields serve as the main facilities for sports and recreation. Additional buildings, like Lewis Hall (30), Fenway (26), and Dovecote (27), contribute to campus life. Parking areas are conveniently placed around the campus perimeter, while North Campus Apartments (34), located separately across Forest Street, offer additional residential options."
+                    ""
+
                 )
             },
             {"role": "user", "content": symptoms}
@@ -103,11 +132,44 @@ def get_diagnosis(symptoms):
     )
     return response['choices'][0]['message']['content'].strip()
 
-# Function to check if diagnosis indicates a need for mental health support
-def needs_mental_health_support(diagnosis_text):
-    # Keywords that might indicate a need for mental health support
-    mental_health_keywords = ["anxiety", "depression", "mental health", "stress", "nervous", "panic", "therapy", "counseling"]
-    return any(keyword in diagnosis_text.lower() for keyword in mental_health_keywords)
+
+# Function to check if diagnosis indicates a campus location
+def contains_location_reference(text):
+    campus_locations = [
+        "Wellness Center",  # Near Bentley Police Station
+        "Health Center",  # Located in Rhodes Hall
+        "Rhodes Hall",  # Building 18
+        "Collins Hall",  # Building 15
+        "Falcon Market",  # Inside Collins Hall
+        "Bentley Police Station",  # Near Rhodes Hall
+        "Student Center",  # Building 19
+        "LaCava Center",  # Building 1
+        "Bentley Library",  # Building 2
+        "Morison Hall",  # Building 4
+        "Adamian Academic Center",  # Building 5
+        "Smith Academic Technology Center",  # Building 6
+        "Jennison Hall",  # Building 7
+        "Rauch Administration Center",  # Building 8
+        "Falcone Complex",  # Building 9
+        "The Trees",  # Building 10
+        "Boylston Apartments",  # Building 13
+        "Orchard North Apartments",  # Building 20
+        "Orchard South Apartments",  # Building 21
+        "The Castle",  # Building 22
+        "The Cape",  # Building 23
+        "Dana Athletic Center",  # Building 29
+        "North Campus Apartments",  # Building 34
+        "Miller Hall",  # Building 16
+        "Slade Hall",  # Building 11
+        "Forest Hall",  # Building 17
+        "Lindsay Hall",  # Building 5
+        "Fenway",  # Building 26
+        "Dovecote",  # Building 27
+        "Lewis Hall"  # Building 30
+    ]
+
+    return any(location in text for location in campus_locations)
+
 
 # Automatically run the diagnosis if symptoms are entered
 if symptoms_input:
@@ -119,10 +181,15 @@ if symptoms_input:
                 st.write("## Preliminary Diagnosis")
                 st.write(diagnosis)
                 st.markdown('</div>', unsafe_allow_html=True)
-                
-                # Check if the diagnosis indicates a need for mental health support
-                if needs_mental_health_support(diagnosis):
-                    # Directly display a styled button that links to the wellness center
+
+                # Check if the diagnosis contains any campus location references
+                if contains_location_reference(diagnosis):
+                    st.write(
+                        "Since this recommendation includes a specific campus location, here’s a map for your reference:")
+                    st.image("bentleyMap.jpg", caption="Bentley University Campus Map")
+
+                # Display a link to the Wellness Center if mental health support is suggested
+                if "Wellness Center" in diagnosis:
                     st.markdown(
                         """
                         <a href="https://www.bentley.edu/university-life/student-health/health-center" target="_blank" class="redirect-button">
@@ -134,5 +201,19 @@ if symptoms_input:
         except Exception as e:
             st.error(f"An error occurred: {e}")
 
+# Footer with professional disclaimer
+st.markdown(
+    """
+    <div class="footer">
+        
+        <p>**Disclaimer:** This application provides general information based on AI-generated responses and is not a substitute for professional medical advice. Please consult a healthcare provider for personal medical guidance.</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # Close the main container div
 st.markdown('</div>', unsafe_allow_html=True)
+
+
+
