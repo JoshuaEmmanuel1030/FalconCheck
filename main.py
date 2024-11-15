@@ -93,7 +93,7 @@ if st.sidebar.button("Visit Wellness Center"):
 
 # Center the image using st.image with custom CSS
 st.markdown('<div style="display: flex; justify-content: center; margin-top: 20px;">', unsafe_allow_html=True)
-st.image("logo3.png", width=200, caption="Medical Diagnosis Logo")
+st.image("logo3.jpg", width=200, caption="Medical Diagnosis Logo")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # App Title and Instructions
