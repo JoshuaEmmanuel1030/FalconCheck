@@ -4,8 +4,8 @@ import openai
 import streamlit as st
 
 # Load environment variables
-load_dotenv()
-openai.api_key = os.getenv('OPENAI_API_KEY')
+load_dotenv()  # This is optional if you're setting the API key through platform secrets
+openai.api_key = os.getenv('OPENAI_API_KEY')  # Access API key from environment
 
 # Custom CSS for styling, including button transition
 st.markdown("""
@@ -63,13 +63,13 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Add a blank sidebar for now
+# Sidebar (you can add more content here later)
 st.sidebar.title("Sidebar")
 st.sidebar.write("This is the sidebar content placeholder.")
 
 # Center the image using st.image with custom CSS
 st.markdown('<div style="display: flex; justify-content: center; margin-top: 20px;">', unsafe_allow_html=True)
-st.image("logo2.png", width=200, caption="Medical Diagnosis Logo")
+st.image("images/logo2.png", width=200, caption="Medical Diagnosis Logo")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # App Title and Instructions
@@ -79,7 +79,6 @@ st.write("Enter your symptoms or health concerns and press Enter for a prelimina
 
 # Input for symptoms or health concerns
 symptoms_input = st.text_input("Please describe your symptoms or health concerns:")
-
 
 # Function to call OpenAI API for diagnosis
 def get_diagnosis(symptoms):
@@ -103,14 +102,11 @@ def get_diagnosis(symptoms):
     )
     return response['choices'][0]['message']['content'].strip()
 
-
 # Function to check if diagnosis indicates a need for mental health support
 def needs_mental_health_support(diagnosis_text):
     # Keywords that might indicate a need for mental health support
-    mental_health_keywords = ["anxiety", "depression", "mental health", "stress", "nervous", "panic", "therapy",
-                              "counseling"]
+    mental_health_keywords = ["anxiety", "depression", "mental health", "stress", "nervous", "panic", "therapy", "counseling"]
     return any(keyword in diagnosis_text.lower() for keyword in mental_health_keywords)
-
 
 # Automatically run the diagnosis if symptoms are entered
 if symptoms_input:
@@ -122,7 +118,7 @@ if symptoms_input:
                 st.write("## Preliminary Diagnosis")
                 st.write(diagnosis)
                 st.markdown('</div>', unsafe_allow_html=True)
-
+                
                 # Check if the diagnosis indicates a need for mental health support
                 if needs_mental_health_support(diagnosis):
                     # Directly display a styled button that links to the wellness center
