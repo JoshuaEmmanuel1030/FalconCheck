@@ -4,7 +4,7 @@ import openai
 import streamlit as st
 
 # Load environment variables
-OPENAI_API_KEY= sk-proj-QZglEAIbtCbbShBNctBjT3BlbkFJ7J8PXsXqASFgJqitEE0B
+OPENAI_API_KEY= "sk-proj-QZglEAIbtCbbShBNctBjT3BlbkFJ7J8PXsXqASFgJqitEE0B"
   # This is optional if you're setting the API key through platform secrets
 openai.api_key = OPENAI_API_KEY  # Access API key from environment
 
