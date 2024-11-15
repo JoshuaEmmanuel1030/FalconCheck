@@ -136,37 +136,47 @@ def get_diagnosis(symptoms):
 # Function to check if diagnosis indicates a campus location
 def contains_location_reference(text):
     campus_locations = [
-        "Wellness Center",  # Near Bentley Police Station
-        "Health Center",  # Located in Rhodes Hall
-        "Rhodes Hall",  # Building 18
-        "Collins Hall",  # Building 15
-        "Falcon Market",  # Inside Collins Hall
-        "Bentley Police Station",  # Near Rhodes Hall
-        "Student Center",  # Building 19
-        "LaCava Center",  # Building 1
-        "Bentley Library",  # Building 2
-        "Morison Hall",  # Building 4
-        "Adamian Academic Center",  # Building 5
-        "Smith Academic Technology Center",  # Building 6
-        "Jennison Hall",  # Building 7
-        "Rauch Administration Center",  # Building 8
-        "Falcone Complex",  # Building 9
-        "The Trees",  # Building 10
-        "Boylston Apartments",  # Building 13
-        "Orchard North Apartments",  # Building 20
-        "Orchard South Apartments",  # Building 21
-        "The Castle",  # Building 22
-        "The Cape",  # Building 23
-        "Dana Athletic Center",  # Building 29
-        "North Campus Apartments",  # Building 34
-        "Miller Hall",  # Building 16
-        "Slade Hall",  # Building 11
-        "Forest Hall",  # Building 17
-        "Lindsay Hall",  # Building 5
-        "Fenway",  # Building 26
-        "Dovecote",  # Building 27
-        "Lewis Hall"  # Building 30
-    ]
+    "Wellness Center",                # Near Bentley Police Station
+    "Health Center",                  # Located in Rhodes Hall (Building 18)
+    "Rhodes Hall",                    # Building 18
+    "Collins Hall",                   # Building 15
+    "Falcon Market",                  # Inside Collins Hall
+    "Bentley Police Station",         # Near Rhodes Hall
+    "Student Center",                 # Building 19
+    "LaCava Center",                  # Building 1
+    "Bentley Library",                # Building 2
+    "Morison Hall",                   # Building 4
+    "Lindsay Hall",                   # Building 5
+    "Adamian Academic Center",        # Building 6
+    "Smith Academic Technology Center", # Building 7
+    "Jennison Hall",                  # Building 8
+    "Rauch Administration Center",    # Building 9
+    "Falcone Complex",                # Building 10
+    "The Trees",                      # Building 10
+    "Boylston Apartments",            # Building 13
+    "Miller Hall",                    # Building 16
+    "Slade Hall",                     # Building 11
+    "Forest Hall",                    # Building 17
+    "Orchard North Apartments",       # Building 20
+    "Orchard South Apartments",       # Building 21
+    "Kresge Hall",                    # Building 14
+    "The Castle",                     # Building 22
+    "The Cape",                       # Building 23
+    "Dana Athletic Center",           # Building 29
+    "North Campus Apartments",        # Building 34
+    "Fenway",                         # Building 26
+    "Dovecote",                       # Building 27
+    "Lewis Hall",                     # Building 30
+    "Baseball Fields",                # East of Dana Athletic Center
+    "Softball Fields",                # Near Baseball Fields
+    "North Campus Residence Halls",  # General area near Building 34
+    "Parking Lot A",                  # Near Main Entrance
+    "Parking Lot B",                  # Near Jennison Hall
+    "Parking Lot C",                  # Near Dana Athletic Center
+    "Parking Lot D",                  # Near North Campus Apartments
+    "Parking Lot E"                   # Behind Orchard Apartments
+]
+
 
     return any(location in text for location in campus_locations)
 
