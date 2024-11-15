@@ -1,11 +1,12 @@
 
 import openai
+import os
 import streamlit as st
 
 # Load environment variables
 
   # This is optional if you're setting the API key through platform secrets
-openai.api_key = "sk-proj-QZglEAIbtCbbShBNctBjT3BlbkFJ7J8PXsXqASFgJqitEE0B"  # Access API key from environment
+openai.api_key = os.getenv("OPENAI_API_KEY")  # Access API key from environment
 
 # Custom CSS for styling, including button transition
 st.markdown("""
